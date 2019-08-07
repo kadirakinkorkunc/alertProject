@@ -1,0 +1,8 @@
+.formDiv{
+    height: 30%;
+    width: 25%;
+    float: left;
+    border: 2px;
+    border-style: outset;
+    margin-left: 1%;
+}
