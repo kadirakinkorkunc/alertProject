@@ -2,45 +2,44 @@ import React, { Component } from 'react';
 import './GraphicComponent.css';
 import Chart from "react-google-charts";
 import axios from 'axios';
+
+
 class GraphicComponent extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
+      alertHistory: []
       // veri buraya çekilecek sonra grafiğe verilecek 
     }
   }
 
-  
-  getRequest = () => {  // TIKLANAN HER KAYIT İÇİN ALERT HİSTORYSİNİ ÇEKİP GRAFİĞE YANSITICAK
-    axios.get('/api/alerts/${id}') // İD VERİSİNi TABLE DA İTEME TIKLANILDIĞI AN BURAYA PASLANACAK
+
+  componentDidMount = () => {  // TIKLANAN HER KAYIT İÇİN ALERT HİSTORYSİNİ ÇEKİP GRAFİĞE YANSITICAK
+    axios.get(`/api/alerts/${this.props.match.params.id}/history`) // İD VERİSİNi TABLE DA İTEME TIKLANILDIĞI AN BURAYA PASLANACAK
       .then(res => {
-        this.setState({ liste: res.data, isLoading: true })
+        this.setState({ alertHistory: [["freq","Alert"]].concat(res.data.map((dataItem)=> [dataItem.alertTime,dataItem.success])), isLoading: true })
+        console.log("api verisi:", this.state.alertHistory);
       });
   }
 
 
-  render(){
+  render() {
     return <div className="graphComp">
+
       <Chart
-        width={'600px'}
-        height={'400px'}
-        chartType="LineChart"
+        width={'800px'}
+        height={'600px'}
+        chartType="ScatterChart"
         loader={<div>Loading Chart</div>}
-        data={[ // buraya atılan isteğin cevabı, [kontrolSüresi,Sonuç] şeklinde eklenicek
-          ['Freq', 'State'],
-          [0, 0],
-          [1, 1],
-          [2, 0],
-          [3, 1]
-        
-        ]}
+
+        data={this.state.alertHistory}
         options={{
           hAxis: {
-            title: 'Frekans',
+            title: 'Saniye',
           },
           vAxis: {
-            title: 'State',
+            title: 'State(1 means succesfull)',
           },
         }}
         rootProps={{ 'data-test': '1' }}

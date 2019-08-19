@@ -3,15 +3,10 @@ import './TableComponent.css';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import axios from 'axios';
-import GraphicComponent from '../GraphicComponent/GraphicComponent';
-import ListItemText from '@material-ui/core/ListItemText';
 import Async from 'react-async';
+import Button from 'react-bootstrap/Button';
 class TableComponent extends Component {
 
-
-    showGraph() {
-        // BURDAN TIKLANILAN OBJENİN İD'SİNİ GRAFİK COMPONENT'E AKTAR.
-    }
 
 
     getAlerts = () => {
@@ -30,11 +25,11 @@ class TableComponent extends Component {
         return <Async promiseFn={this.getAlerts}>
             {({ data, error, isLoading, reload }) => {
                 if (isLoading) {
-                    return <div className="tableDiv">Loading...</div>
+                    return <div >Loading...</div>
                 }
                 if (error) {
                     return (
-                        <div className="tableDiv"> 
+                        <div > 
                             <p>{error.toString()}</p>
                             <button onClick={reload}>try again</button>
                         </div>
@@ -44,8 +39,8 @@ class TableComponent extends Component {
                     return <div className="tableDiv">
                         <List component="nav" aria-label="main mailbox folders">
                             {data.map((dataItem) =>
-                                <ListItem key={dataItem.reqId} button onClick={this.showGraph}>
-                                    <ListItemText primary={dataItem.reqName} />
+                                <ListItem key={dataItem.reqId} onClick={this.showGraph}>
+                                    <Button href={`/graph/${dataItem.reqId}`}>{dataItem.reqName}-{dataItem.reqUrl}</Button>
                                 </ListItem>
                             )}
                         </List>
