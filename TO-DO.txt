@@ -1,76 +1,45 @@
 *************************************************************************************************************************
-*CLIENT-SIDE														*
+*CLIENT-SIDE												| WAITING	*
 *-----------------------------------------------------------------------------------------------------------------------*													*		
 *1 -> FORMDAN GELEN DATAYI DATABASE'E YOLLA										*
-*	1.1 -> handleSubmit fonksiyonun içinde form inputlarýný toplayýp obje oluþturup db itele			*
-*	1.2 -> webapi/submit e call yapýcak, submit post bi method form verisini db ye yollayacak			*
-*2 -> LISTCOMPONENT'TE DATABASE'DEN VERÝLERÝ CEKÝP LÝSTEYE VER								*
-*	2.1 -> LÝSTEDEN TIKLANAN ÝTEMÝN ÝD'SÝNÝ GRAPHCOMPONENT'E AKTAR							*
-*		2.1.1 -> COMPONENT'TEN COMPONENT'E VERÝ AKIÞINI ÖÐREN							*
-*	2.2 -> webapi/receive/id ye call yapýcak get methodu, db den veriyi cekip listeye eklicek 			*
-*3 -> GRAPHCOMPONENT'TE DATABASE'DEN VERÝLERÝNÝ ÇEKÝP GRAFÝÐE VER 							*
-*	3.1 -> webapi/receive/id ye call yapýcak get methodu, db den veriyi cekip grafiðe vericek			*	
+*	1.1 -> handleSubmit fonksiyonun içinde form inputlarýný toplayýp obje oluþturup db itel		|   DONE	*
+*	1.2 -> webapi/submit e call yapýcak, submit post bi method form verisini db ye yollayacak	|   DONE	*
+*2 -> LISTCOMPONENT'TE DATABASE'DEN VERÝLERÝ CEKÝP LÝSTEYE VER						|   DONE	*
+*	2.1 -> LÝSTEDEN TIKLANAN ÝTEMÝN ÝD'SÝNÝ GRAPHCOMPONENT'E AKTAR					| WAITING	*
+*		2.1.1 -> COMPONENT'TEN COMPONENT'E VERÝ AKIÞINI ÖÐREN					| WAITING	*
+*	2.2 -> webapi/receive/id ye call yapýcak get methodu, db den veriyi cekip listeye eklicek 	|   DONE	*
+*3 -> GRAPHCOMPONENT'TE DATABASE'DEN VERÝLERÝNÝ ÇEKÝP GRAFÝÐE VER 					| WAITING	*
+*	3.1 -> webapi/receive/id ye call yapýcak get methodu, db den veriyi cekip grafiðe vericek	| WAITING	*	
 *															*
-*ps -> her component'in sürekli db baðlantýsý açmamasý için db baðlantýsý açan servis yaz, diðerlerine injekte et	*
-* 		ayný instance'ý kullansýnlar.										*
-*															*
-*ps 2 -> her url'in kontrolleri asenkron olarak yapýlacak.birbirini ezmicekler						*
 *************************************************************************************************************************
 
 #########################################################################################################################
-# API-SIDE														#
+# API-SIDE									| DONE					#
 # ----------------------------------------------------------------------------------------------------------------------#
-# 1 -> POSTQRESQL Kurulacak												#
-# 2 -> MVC ile data controller olusturup veriyi kaydeden http post 							#
-#					 veriyi çeken htpp get methodlarý                                               #
-# 3 -> AlertHistory diye obje oluþtur, alert objesinin id'sine baðla 							#
+# 1 -> POSTQRESQL Kurulacak							| DONE					#
+# 2 -> MVC ile data controller olusturup veriyi kaydeden http post 		| DONE					#
+#					 veriyi çeken htpp get methodlarý       | DONE                                  #
+# 3 -> AlertHistory diye obje oluþtur, alert objesinin id'sine baðla 		| DONE					#
 #########################################################################################################################
 
-MainComponent satýr 8 
-TableComponent satýr 15 
-GraphicComponent satýr 36-37
-Asenkron iletim yapýlýyor mu ?? save denilince diðer komponentte oluþmuyor...
+QUESTIONS?
+----
+Asenkron iletim yapýlýyor mu ?? save denilince diðer komponentte oluþmuyor... LOGIC'I MI YANLIS BILIYORUM?
 
 
 TO-DO
 ------ 07.08.2019
-use axios instead of fetch,
-react-router for triggering another component
+use axios instead of fetch,  | DONE
+back end for alertHistory,   | DONE 
+react-router for triggering another component, | maybe we dont gonna need that
+
+TO-DO
+------ 08.08.2019
+BACK-END		 | COMPLETLY DONE
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-DB
-
-
-
-reqId, reqName, reqURL, reqType, reqControlTime 
-
- 0,     test, google.com, GET,      20
+TO-DO
+----- 09.08.2019
+FORM COMPONENT SATIR 34'Ü OKU (async)
+TABLE COMPONENT SATIR 15'Ý OKU ( veri transfer)
+GRAPHIC COMPONENT SATIR 15,16,10'U OKU  (veri receive)

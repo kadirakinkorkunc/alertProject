@@ -5,22 +5,21 @@ import ListItem from '@material-ui/core/ListItem';
 import axios from 'axios';
 import GraphicComponent from '../GraphicComponent/GraphicComponent';
 import ListItemText from '@material-ui/core/ListItemText';
+import Async from 'react-async';
 class TableComponent extends Component {
-    state = {
-        isLoading: true,
-        liste: []
-    };
+
 
     showGraph() {
-
+        // BURDAN TIKLANILAN OBJENİN İD'SİNİ GRAFİK COMPONENT'E AKTAR.
     }
 
 
-    async componentDidMount() {
-        axios.get('/api/alerts')
+    getAlerts = () => {
+        return axios.get('/api/alerts')
             .then(res => {
                 console.log(res.data);
                 this.setState({ liste: res.data, isLoading: true })
+                return res.data;
             });
 
     }
@@ -28,23 +27,35 @@ class TableComponent extends Component {
     // table post atınca bunun tekrar yenilenmesi lazım async belirtince olması gerekmiyor muydu?
 
     render() {
-        const { liste, isLoading } = this.state;
-        if (isLoading) {
-            return <div className="tableDiv" >
-                <List component="nav" aria-label="main mailbox folders">
-                    {liste.map((listItem) =>
-                        <ListItem key={listItem.reqId} button onClick={this.showGraph}>
-                            <ListItemText primary={listItem.reqName} />
-                        </ListItem>
-                    )}
-                </List>
-                
-            </div>
-            
-        }
-        else {
-            return <p>Loading...</p>
-        }
+        return <Async promiseFn={this.getAlerts}>
+            {({ data, error, isLoading, reload }) => {
+                if (isLoading) {
+                    return <div className="tableDiv">Loading...</div>
+                }
+                if (error) {
+                    return (
+                        <div className="tableDiv"> 
+                            <p>{error.toString()}</p>
+                            <button onClick={reload}>try again</button>
+                        </div>
+                    )
+                }
+                if (data) {
+                    return <div className="tableDiv">
+                        <List component="nav" aria-label="main mailbox folders">
+                            {data.map((dataItem) =>
+                                <ListItem key={dataItem.reqId} button onClick={this.showGraph}>
+                                    <ListItemText primary={dataItem.reqName} />
+                                </ListItem>
+                            )}
+                        </List>
+
+                    </div>
+                }
+                return null
+            }}
+
+        </Async>
     }
 }
 export default TableComponent;
