@@ -3,21 +3,43 @@ import './MainComponent.css';
 import FormComponent from './FormComponent/FormComponent';
 import TableComponent from './TableComponent/TableComponent';
 import GraphicComponent from './GraphicComponent/GraphicComponent';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Link } from "react-router-dom";
+import { Nav, Navbar, NavItem } from "react-bootstrap";
 
 class MainComponent extends Component {
+
+
+
+    biMetod() {
+        //ilk post atıldıktan sonra burda sürekli alertHistory'ye belirtilen sürede tekrar edecek şekilde
+        // bi' metod yazılmalı.Bu metod tüm alertlerin alerthistorysini sürekli güncelleyebilmeli
+        //  arkada sürekli çalışmalı
+
+        // kaydedilen her alert kendi id'si ile buraya belirtilen süre tekrarında uğramalı ve 
+        //historysine yeni veri çekmeli
+    }
+
+
     render() {
 
         return <Router>
             <div>
-
                 <Navbar bg="dark" variant="dark">
-                    <Navbar.Brand href="/">AlertProject</Navbar.Brand>
+                    <Navbar.Brand >
+                        <Link to="/">
+                            AlertProject
+                        </Link>
+                    </Navbar.Brand>
                     <Nav className="mr-auto">
-                        <Nav.Link href="/">Add Alert</Nav.Link>
-                        <Nav.Link href="/list">Alert List</Nav.Link>
+                        <LinkContainer to="/">
+                            <Nav.Link>Add Alert</Nav.Link>
+                        </LinkContainer>
+
+                        <LinkContainer to="/list">
+                            <Nav.Link>Alert List</Nav.Link>
+                        </LinkContainer>
                     </Nav>
                 </Navbar>
 

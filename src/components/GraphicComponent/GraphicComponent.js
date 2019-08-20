@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import './GraphicComponent.css';
 import Chart from "react-google-charts";
 import axios from 'axios';
-
-
+import { LinkContainer } from 'react-router-bootstrap';
+import Button from 'react-bootstrap/Button'
+import { Nav } from "react-bootstrap";
 class GraphicComponent extends Component {
 
   constructor(props) {
@@ -18,7 +19,7 @@ class GraphicComponent extends Component {
   componentDidMount = () => {  // TIKLANAN HER KAYIT İÇİN ALERT HİSTORYSİNİ ÇEKİP GRAFİĞE YANSITICAK
     axios.get(`/api/alerts/${this.props.match.params.id}/history`) // İD VERİSİNi TABLE DA İTEME TIKLANILDIĞI AN BURAYA PASLANACAK
       .then(res => {
-        this.setState({ alertHistory: [["freq","Alert"]].concat(res.data.map((dataItem)=> [dataItem.alertTime,dataItem.success])), isLoading: true })
+        this.setState({ alertHistory: [["freq", "Alert"]].concat(res.data.map((dataItem) => [dataItem.alertTime, dataItem.success])), isLoading: true })
         console.log("api verisi:", this.state.alertHistory);
       });
   }
@@ -26,9 +27,13 @@ class GraphicComponent extends Component {
 
   render() {
     return <div className="graphComp">
-
+      <Nav >
+        <LinkContainer to="/list">
+          <button>Alert List</button>
+        </LinkContainer>
+      </Nav>
       <Chart
-        width={'800px'}
+        width={'900px'}
         height={'600px'}
         chartType="ScatterChart"
         loader={<div>Loading Chart</div>}

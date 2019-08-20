@@ -4,7 +4,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import axios from 'axios';
 import Async from 'react-async';
-import Button from 'react-bootstrap/Button';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Nav } from "react-bootstrap";
 class TableComponent extends Component {
 
 
@@ -29,7 +30,7 @@ class TableComponent extends Component {
                 }
                 if (error) {
                     return (
-                        <div > 
+                        <div >
                             <p>{error.toString()}</p>
                             <button onClick={reload}>try again</button>
                         </div>
@@ -40,7 +41,9 @@ class TableComponent extends Component {
                         <List component="nav" aria-label="main mailbox folders">
                             {data.map((dataItem) =>
                                 <ListItem key={dataItem.reqId} onClick={this.showGraph}>
-                                    <Button href={`/graph/${dataItem.reqId}`}>{dataItem.reqName}-{dataItem.reqUrl}</Button>
+                                    <LinkContainer to={`/graph/${dataItem.reqId}`}>
+                                        <Nav.Link>{dataItem.reqName}-{dataItem.reqUrl}</Nav.Link>
+                                    </LinkContainer>
                                 </ListItem>
                             )}
                         </List>

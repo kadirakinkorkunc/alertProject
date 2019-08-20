@@ -3,7 +3,7 @@ import './FormComponent.css';
 import { Form, Container } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure()
 
@@ -29,7 +29,7 @@ class FormComponent extends Component {
 
         axios.post('api/alerts', this.state)
             .then(res => {
-                if (res.data == "basariyla eklendi!") {
+                if (res.data === "basariyla eklendi!") {
                     toast.success('Alert added!', {
                         position: "top-right",
                         autoClose: 2000,
@@ -58,14 +58,6 @@ class FormComponent extends Component {
             })
     }
 
-    biMetod() {
-        //ilk post atıldıktan sonra burda sürekli alertHistory'ye belirtilen sürede tekrar edecek şekilde
-        // bi' metod yazılmalı.Bu metod tüm alertlerin alerthistorysini sürekli güncelleyebilmeli
-        //  arkada sürekli çalışmalı
-
-        // kaydedilen her alert kendi id'si ile buraya belirtilen süre tekrarında uğramalı ve 
-        //historysine yeni veri çekmeli
-    }
     render() {
 
         return <div className="formDiv">
