@@ -2171,6 +2171,14 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
+bem-react-component-creator@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/bem-react-component-creator/-/bem-react-component-creator-1.2.0.tgz#13a16387b3e96229c0fc1dc83f5a0d8aea99f5ac"
+  integrity sha1-E6Fjh7PpYinA/B3IP1oNiuqZ9aw=
+  dependencies:
+    prop-types "^15.6.0"
+    react "^16.2.0"
+
 big.js@^5.2.2:
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-5.2.2.tgz#65f0af382f578bcdc742bd9c281e9cb2d7768328"
@@ -2955,6 +2963,15 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     ripemd160 "^2.0.0"
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
+
+create-react-class@^15.5.2:
+  version "15.6.3"
+  resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.3.tgz#2d73237fb3f970ae6ebe011a9e66f46dbca80036"
+  integrity sha512-M+/3Q6E6DLO6Yx3OwrWjwHBnvfXXYA7W+dFjt/ZDBemHO1DDZhsalX/NUtnTYclN6GfnBDRh4qRHjcDHmlJBJg==
+  dependencies:
+    fbjs "^0.8.9"
+    loose-envify "^1.3.1"
+    object-assign "^4.1.1"
 
 create-react-context@<=0.2.2:
   version "0.2.2"
@@ -4188,7 +4205,7 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "^2.0.0"
 
-fbjs@^0.8.0:
+fbjs@^0.8.0, fbjs@^0.8.16, fbjs@^0.8.9:
   version "0.8.17"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
   integrity sha1-xNWY6taUkRJlPWWIsBpc3Nn5D90=
@@ -4388,6 +4405,17 @@ form-data@~2.3.2:
     asynckit "^0.4.0"
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
+
+formik@0.11.11:
+  version "0.11.11"
+  resolved "https://registry.yarnpkg.com/formik/-/formik-0.11.11.tgz#4b02838133c0196b1ef443aa973766cd097ec4a5"
+  integrity sha1-SwKDgTPAGWse9EOqlzdmzQl+xKU=
+  dependencies:
+    lodash.clonedeep "^4.5.0"
+    lodash.isequal "4.5.0"
+    lodash.topath "4.5.2"
+    prop-types "^15.5.10"
+    warning "^3.0.0"
 
 forwarded@~0.1.2:
   version "0.1.2"
@@ -6286,10 +6314,20 @@ lodash._reinterpolate@^3.0.0:
   resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
   integrity sha1-DM8tiRZq8Ds2Y8eWU4t1rG4RTZ0=
 
+lodash.clonedeep@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
+  integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
+
 lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
+
+lodash.isequal@4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+  integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
 
 lodash.memoize@^4.1.2:
   version "4.1.2"
@@ -6325,6 +6363,11 @@ lodash.throttle@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
   integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
+
+lodash.topath@4.5.2:
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/lodash.topath/-/lodash.topath-4.5.2.tgz#3616351f3bba61994a0931989660bd03254fd009"
+  integrity sha1-NhY1Hzu6YZlKCTGYlmC9AyVP0Ak=
 
 lodash.unescape@4.0.1:
   version "4.0.1"
@@ -6649,6 +6692,11 @@ mkdirp@0.5.1, mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@
   dependencies:
     minimist "0.0.8"
 
+moment@^2.22.1:
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -6944,6 +6992,11 @@ object-assign@4.1.1, object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
   integrity sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
+
+object-assign@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-3.0.0.tgz#9bedd5ca0897949bca47e7ff408062d549f587f2"
+  integrity sha1-m+3VygiXlJvKR+f/QIBi1Un1h/I=
 
 object-copy@^0.1.0:
   version "0.1.0"
@@ -8390,10 +8443,37 @@ react-bootstrap@^1.0.0-beta.10:
     uncontrollable "^7.0.0"
     warning "^4.0.3"
 
+react-confirm-alert@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/react-confirm-alert/-/react-confirm-alert-2.4.1.tgz#cc0837edd80271ea1c5e93840537399e99b07ff3"
+  integrity sha512-Sc2N1paCTCS5HWEAhik2IQa9/vwSQLAoCT5uccjPH/VyTaBAkRPZPx9sUqFTy3q5VnnGwCPsoz7fnw54x79d/w==
+
 react-context-toolbox@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/react-context-toolbox/-/react-context-toolbox-2.0.2.tgz#35637287cb23f801e6ed802c2bb7a97e1f04e3fb"
   integrity sha512-tY4j0imkYC3n5ZlYSgFkaw7fmlCp3IoQQ6DxpqeNHzcD0hf+6V+/HeJxviLUZ1Rv1Yn3N3xyO2EhkkZwHn0m1A==
+
+react-crud-table@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/react-crud-table/-/react-crud-table-0.0.8.tgz#b86a66207a2cb0cfc6cc7afda8c84b002f19535b"
+  integrity sha512-Q4LIt1MeXtIKUTClu1OWtPx7HUKbL7M+hF/UktA14gRv3sFYGaX+uHyJhfBLCWsHqPAABzJpFPJ5JQs6yGW1Qw==
+  dependencies:
+    bem-react-component-creator "^1.2.0"
+    formik "0.11.11"
+    moment "^2.22.1"
+    prop-types "^15.6.1"
+    react "16.3.2"
+    react-datetime "^2.14.0"
+
+react-datetime@^2.14.0:
+  version "2.16.3"
+  resolved "https://registry.yarnpkg.com/react-datetime/-/react-datetime-2.16.3.tgz#7f9ac7d4014a939c11c761d0c22d1fb506cb505e"
+  integrity sha512-amWfb5iGEiyqjLmqCLlPpu2oN415jK8wX1qoTq7qn6EYiU7qQgbNHglww014PT4O/3G5eo/3kbJu/M/IxxTyGw==
+  dependencies:
+    create-react-class "^15.5.2"
+    object-assign "^3.0.0"
+    prop-types "^15.5.7"
+    react-onclickoutside "^6.5.0"
 
 react-dev-utils@^9.0.1:
   version "9.0.1"
@@ -8462,6 +8542,11 @@ react-load-script@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/react-load-script/-/react-load-script-0.0.6.tgz#db6851236aaa25bb622677a2eb51dad4f8d2c258"
   integrity sha512-aRGxDGP9VoLxcsaYvKWIW+LRrMOzz2eEcubTS4NvQPPugjk2VvMhow0wWTkSl7RxookomD1MwcP4l5UStg5ShQ==
+
+react-onclickoutside@^6.5.0:
+  version "6.9.0"
+  resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.9.0.tgz#a54bc317ae8cf6131a5d78acea55a11067f37a1f"
+  integrity sha512-8ltIY3bC7oGhj2nPAvWOGi+xGFybPNhJM0V1H8hY/whNcXgmDeaeoCMPPd8VatrpTsUWjb/vGzrmu6SrXVty3A==
 
 react-overlays@^1.2.0:
   version "1.2.0"
@@ -8633,6 +8718,30 @@ react-transition-group@^4.0.0:
     "@babel/runtime" "^7.4.5"
     dom-helpers "^3.4.0"
     loose-envify "^1.4.0"
+    prop-types "^15.6.2"
+
+react-websocket@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-websocket/-/react-websocket-2.0.1.tgz#38df1d9b57825a0ec7c9cf8f8f461d17a0150b7e"
+  integrity sha512-urKyhzYIEMaU9oeJqAN75B5KaZvTJ7lhx05ODSg8jyHA/9ym8tOvD7YE00cxTpb0irrE1eXWCUm7Xyi3RW07cg==
+
+react@16.3.2:
+  version "16.3.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.3.2.tgz#fdc8420398533a1e58872f59091b272ce2f91ea9"
+  integrity sha512-o5GPdkhciQ3cEph6qgvYB7LTOHw/GB0qRI6ZFNugj49qJCFfgHwVNjZ5u+b7nif4vOeMIOuYj3CeYe2IBD74lg==
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+
+react@^16.2.0:
+  version "16.9.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.9.0.tgz#40ba2f9af13bc1a38d75dbf2f4359a5185c4f7aa"
+  integrity sha512-+7LQnFBwkiw+BobzOF6N//BdoNw0ouwmSJTEm9cglOOmsg/TMiFHZLe2sEoN5M7LgJTj9oHH0gxklfnQe66S1w==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
     prop-types "^15.6.2"
 
 react@^16.8.6:

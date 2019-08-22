@@ -13,7 +13,7 @@ class FormComponent extends Component {
         this.state = { // state'i alert ve alerthistory olarak dizilere ayır 
             reqName: '',
             reqUrl: '',
-            reqType: '',
+            reqType: 'GET',
             reqControlTime: ''
         }
         this.handleChange = this.handleChange.bind(this)

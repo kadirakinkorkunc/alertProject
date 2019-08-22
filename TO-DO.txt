@@ -5,11 +5,10 @@
 *	1.1 -> handleSubmit fonksiyonun içinde form inputlarýný toplayýp obje oluþturup db itel		|   DONE	*
 *	1.2 -> webapi/submit e call yapýcak, submit post bi method form verisini db ye yollayacak	|   DONE	*
 *2 -> LISTCOMPONENT'TE DATABASE'DEN VERÝLERÝ CEKÝP LÝSTEYE VER						|   DONE	*
-*	2.1 -> LÝSTEDEN TIKLANAN ÝTEMÝN ÝD'SÝNÝ GRAPHCOMPONENT'E AKTAR					| WAITING	*
-*		2.1.1 -> COMPONENT'TEN COMPONENT'E VERÝ AKIÞINI ÖÐREN					| WAITING	*
+*	2.1 -> LÝSTEDEN TIKLANAN ÝTEMÝN ÝD'SÝNÝ GRAPHCOMPONENT'E AKTAR					|   DONE        *
 *	2.2 -> webapi/receive/id ye call yapýcak get methodu, db den veriyi cekip listeye eklicek 	|   DONE	*
-*3 -> GRAPHCOMPONENT'TE DATABASE'DEN VERÝLERÝNÝ ÇEKÝP GRAFÝÐE VER 					| WAITING	*
-*	3.1 -> webapi/receive/id ye call yapýcak get methodu, db den veriyi cekip grafiðe vericek	| WAITING	*	
+*3 -> GRAPHCOMPONENT'TE DATABASE'DEN VERÝLERÝNÝ ÇEKÝP GRAFÝÐE VER 					|   DONE        *
+*	3.1 -> webapi/receive/id ye call yapýcak get methodu, db den veriyi cekip grafiðe vericek	|   DONE        *	
 *															*
 *************************************************************************************************************************
 
@@ -52,3 +51,15 @@ GRAPHIC COMPONENT SATIR 15,16,10'U OKU  (veri receive)
 TO-DO
 -----20.08.2019
 SCHEDULED'E UGRAMIYOR GALÝBA
+
+
+TO-DO
+----22.08.2019
+DELETE EDÝLDÝÐÝ ZAMAN SAYFADA DELETE EDÝLEN VERÝ, SAYFA YENÝLENMEDEN GÝTSÝN ( SETINTERVALSÝZ HALLETMEYE CALIÞ ), 
+	 |--WEBSOCKET SANIRSAM WEB SOCKETÝ ÇÖZERSEN SETINTERVALLERÝ KALDIR DÝREK
+SPRING TARAFINDA REST TEMPLATE YERÝNE HTTPMETHOD KULLAN
+DELETE EDÝLDÝÐÝ ZAMAN O OBJEYE AÝT HÝSTORY SÝLÝNÝYOR MU KONTROL ET 
+EDIT BUTONUNA POP UP SEKÝLDE BÝ UPDATE KISMI EKLE (DOGRU CALISIYOR MU KONTROL ET)-- EZGÝYE SORABÝLÝRSÝN O YAPMISTI
+GRAFÝÐÝ DE POP-UP'A ÇEVÝRMEK ÝSTEYEBÝLÝRSÝN
+
+

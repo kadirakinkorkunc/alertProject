@@ -6,7 +6,7 @@ import GraphicComponent from './GraphicComponent/GraphicComponent';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from "react-router-dom";
-import { Nav, Navbar, NavItem } from "react-bootstrap";
+import { Nav, Navbar } from "react-bootstrap";
 
 class MainComponent extends Component {
 

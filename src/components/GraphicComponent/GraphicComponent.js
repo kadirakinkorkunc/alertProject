@@ -3,7 +3,6 @@ import './GraphicComponent.css';
 import Chart from "react-google-charts";
 import axios from 'axios';
 import { LinkContainer } from 'react-router-bootstrap';
-import Button from 'react-bootstrap/Button'
 import { Nav } from "react-bootstrap";
 class GraphicComponent extends Component {
 
@@ -15,8 +14,16 @@ class GraphicComponent extends Component {
     }
   }
 
+  componentDidMount() {
+    this.getGraphs();
+    this.interval = setInterval(this.getGraphs, 1000);
+  }
 
-  componentDidMount = () => {  // TIKLANAN HER KAYIT İÇİN ALERT HİSTORYSİNİ ÇEKİP GRAFİĞE YANSITICAK
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  getGraphs = () => {  // TIKLANAN HER KAYIT İÇİN ALERT HİSTORYSİNİ ÇEKİP GRAFİĞE YANSITICAK
     axios.get(`/api/alerts/${this.props.match.params.id}/history`) // İD VERİSİNi TABLE DA İTEME TIKLANILDIĞI AN BURAYA PASLANACAK
       .then(res => {
         this.setState({ alertHistory: [["freq", "Alert"]].concat(res.data.map((dataItem) => [dataItem.alertTime, dataItem.success])), isLoading: true })
@@ -35,7 +42,7 @@ class GraphicComponent extends Component {
       <Chart
         width={'900px'}
         height={'600px'}
-        chartType="ScatterChart"
+        chartType="LineChart"
         loader={<div>Loading Chart</div>}
 
         data={this.state.alertHistory}
@@ -43,9 +50,7 @@ class GraphicComponent extends Component {
           hAxis: {
             title: 'Saniye',
           },
-          vAxis: {
-            title: 'State(1 means succesfull)',
-          },
+          vAxis: {title: "State",ticks: [{v:0, f:"Fail"},{v:1, f:"Success"}]} ,
         }}
         rootProps={{ 'data-test': '1' }}
       />
