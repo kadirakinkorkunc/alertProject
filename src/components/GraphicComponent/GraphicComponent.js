@@ -4,6 +4,7 @@ import Chart from "react-google-charts";
 import axios from 'axios';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Nav } from "react-bootstrap";
+import Modal from '../../assets/Modal';
 class GraphicComponent extends Component {
 
   constructor(props) {
@@ -23,8 +24,8 @@ class GraphicComponent extends Component {
     clearInterval(this.interval);
   }
 
-  getGraphs = () => {  // TIKLANAN HER KAYIT İÇİN ALERT HİSTORYSİNİ ÇEKİP GRAFİĞE YANSITICAK
-    axios.get(`/api/alerts/${this.props.match.params.id}/history`) // İD VERİSİNi TABLE DA İTEME TIKLANILDIĞI AN BURAYA PASLANACAK
+  getGraphs = () => {  
+    axios.get(`/api/alerts/${this.props.objectIdFromTable}/history`) 
       .then(res => {
         this.setState({ alertHistory: [["freq", "Alert"]].concat(res.data.map((dataItem) => [dataItem.alertTime, dataItem.success])), isLoading: true })
         console.log("api verisi:", this.state.alertHistory);
@@ -39,22 +40,30 @@ class GraphicComponent extends Component {
       </Nav>
       {console.log(this.state.alertHistory)}
 
-      
-      <Chart
-        width={'900px'}
-        height={'600px'}
-        chartType="LineChart"
-        loader={<div>Loading Chart</div>}
-        
-        data={this.state.alertHistory}
-        options={{
-          hAxis: {
-            title: 'Saniye',
-          },
-          vAxis: {title: "State",ticks: [{v:0, f:"Fail"},{v:1, f:"Success"}]} ,
-        }}
-        rootProps={{ 'data-test': '1' }}
-      />
+      <Modal>
+        <Modal.Header >
+          <Modal.Title>
+            <strong>{this.props.objectUrlFromTable} </strong> -> {this.props.objectTypeFromTable}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body padding>
+          <Chart
+            width={'600px'}
+            height={'600px'}
+            chartType="LineChart"
+            loader={<div>Loading Chart</div>}
+
+            data={this.state.alertHistory}
+            options={{
+              hAxis: {
+                title: 'hour:minute:second',
+              },
+              vAxis: { title: "State", ticks: [{ v: 0, f: "Fail" }, { v: 1, f: "Success" }] },
+            }}
+            rootProps={{ 'data-test': '1' }}
+          />
+        </Modal.Body>
+      </Modal>
     </div>
 
   }

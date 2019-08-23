@@ -1,14 +1,18 @@
 import React from 'react';
 import './App.css';
-
-import MainComponent from './components/MainComponent';
+import TableComponent from './components/TableComponent/TableComponent';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
- 
+
 
   return (
     <div className="App" >
-     <MainComponent></MainComponent>
+      <Router>
+        <Switch>
+          <Route exact path='/' component={TableComponent} />
+        </Switch>
+      </Router>
     </div>
   );
 }

@@ -4,6 +4,8 @@ import axios from 'axios';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import EditTable from './EditTable.js';
+import GraphicComponent from '../GraphicComponent/GraphicComponent';
+import FormComponent from '../FormComponent/FormComponent';
 
 class TableComponent extends Component {
 
@@ -11,9 +13,12 @@ class TableComponent extends Component {
         isLoading: true,
         liste: [],
         displayEditForm: false,
-        displayGraph:false,
-        reqId: null
-        
+        displayGraph: false,
+        displayCreateForm: false,
+        reqId: null,
+        reqUrl: null,
+        reqType: null
+
     };
 
 
@@ -60,14 +65,17 @@ class TableComponent extends Component {
         this.setState({ displayEditForm: !this.state.displayEditForm, reqId: id })
     }
 
-    // graphPopUp = (id) => {
-    //     this.setState({ displayGraph: !this.state.displayGraph, reqId: id })
-    // }
+    graphPopUp = (id, url, type) => {
+        this.setState({ displayGraph: !this.state.displayGraph, reqId: id, reqUrl: url, reqType: type })
+    }
+    popupAddForm = () => {
+        this.setState({ displayCreateForm: !this.state.displayCreateForm })
+    }
 
     render() {
         return (
             <div>
-                <h3 align="center">ALERT LIST</h3>
+                <h3 align="center"><button onClick={() => this.popupAddForm()} className="btn btn-success">Create New</button></h3>
                 <table className="table table-striped" style={{ marginTop: 20 }}>
                     <thead>
                         <tr>
@@ -102,11 +110,11 @@ class TableComponent extends Component {
                                             className="btn btn-danger"
                                             onClick={() => this.submit(alertObject.reqId)}>Delete</button>
                                     </td>
-                                    {/* <td>
+                                    <td>
                                         <button
                                             className="btn btn-danger"
-                                            onClick={() => this.graph(alertObject.reqId)}>Graph</button>
-                                    </td> */}
+                                            onClick={() => this.graphPopUp(alertObject.reqId, alertObject.reqUrl, alertObject.reqType)}>Graph</button>
+                                    </td>
                                 </tr>);
                         })}
 
@@ -114,9 +122,21 @@ class TableComponent extends Component {
                 </table>
 
                 <div>{
-                    this.state.displayEditForm ? <EditTable 
+                    this.state.displayEditForm ? <EditTable
                         objectIdFromTable={this.state.reqId}>
-                        </EditTable> : ''}
+                    </EditTable> : ''}
+                </div>
+
+                <div>{
+                    this.state.displayGraph ? <GraphicComponent
+                        objectIdFromTable={this.state.reqId}
+                        objectUrlFromTable={this.state.reqUrl}
+                        objectTypeFromTable={this.state.reqType}>
+                    </GraphicComponent> : ''}
+                </div>
+
+                <div>{
+                    this.state.displayCreateForm ? <FormComponent></FormComponent> : ''}
                 </div>
             </div>
         );

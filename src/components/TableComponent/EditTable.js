@@ -27,13 +27,9 @@ class EditTable extends Component {
     }
 
     componentDidMount() {
-        console.log("comp did mount works!")
-        console.log(this.props.objectIdFromTable);
         axios.get(`/api/alerts/${this.props.objectIdFromTable}`)
             .then(res => {
-                console.log("resdata:", res.data);
                 this.setState({ liste: res.data, isLoading: true })
-                console.log("liste", this.state.liste);
             });
     }
 
