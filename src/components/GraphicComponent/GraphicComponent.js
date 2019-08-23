@@ -40,8 +40,8 @@ class GraphicComponent extends Component {
       </Nav>
       {console.log(this.state.alertHistory)}
 
-      <Modal>
-        <Modal.Header >
+      <Modal onClose={() => this.props.closeGraph()}>
+        <Modal.Header>
           <Modal.Title>
             <strong>{this.props.objectUrlFromTable} </strong> -> {this.props.objectTypeFromTable}
           </Modal.Title>

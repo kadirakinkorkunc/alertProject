@@ -6,6 +6,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import EditTable from './EditTable.js';
 import GraphicComponent from '../GraphicComponent/GraphicComponent';
 import FormComponent from '../FormComponent/FormComponent';
+import { Button } from '../../assets/Buttons';
 
 class TableComponent extends Component {
 
@@ -22,7 +23,7 @@ class TableComponent extends Component {
     };
 
 
-    submit = (id) => {
+    deleteConfirmScreen = (id) => {
         confirmAlert({
             title: 'Confirm to submit',
             message: 'Are you sure to do this.',
@@ -39,16 +40,6 @@ class TableComponent extends Component {
         });
     };
 
-    componentDidMount = () => {
-        return axios.get('/api/alerts')
-            .then(res => {
-                console.log(res.data);
-                this.setState({ liste: res.data, isLoading: true })
-                return res.data;
-            });
-
-    }
-
     deleteItem = (id) => {
         axios.delete(`/api/alerts/${id}`)
             .then(res => {
@@ -61,21 +52,42 @@ class TableComponent extends Component {
         // databaseden silip, daha sonra stateden o itemi bulup siliyorum.
     }
 
-    popupForm = (id) => {
-        this.setState({ displayEditForm: !this.state.displayEditForm, reqId: id })
+    componentDidMount = () => {
+        this.getAlerts();
     }
 
-    graphPopUp = (id, url, type) => {
-        this.setState({ displayGraph: !this.state.displayGraph, reqId: id, reqUrl: url, reqType: type })
+    getAlerts = () => {
+        axios.get('/api/alerts')
+            .then(res => {
+                console.log("tableGet", res.data);
+                this.setState({ liste: res.data, isLoading: true })
+            });
     }
-    popupAddForm = () => {
-        this.setState({ displayCreateForm: !this.state.displayCreateForm })
+
+    openEditTable = (id) => {
+        this.setState({ displayEditForm: true, reqId: id });
+    }
+
+    closeEditTable = () => {
+        this.setState({ displayEditForm: false, reqId: null });
+    }
+    openGraph = (id, url, type) => {
+        this.setState({ displayGraph: true, reqId: id, reqUrl: url, reqType: type })
+    }
+    closeGraph = () => {
+        this.setState({ displayGraph: false, reqId: null, reqUrl: null, reqType: null })
+    }
+    popupAddFormOpen = () => {
+        this.setState({ displayCreateForm: true })
+    }
+    popupAddFormClose = () => {
+        this.setState({ displayCreateForm: false })
     }
 
     render() {
         return (
             <div>
-                <h3 align="center"><button onClick={() => this.popupAddForm()} className="btn btn-success">Create New</button></h3>
+                <h3 align="center"><Button onClick={() => this.popupAddFormOpen()} btnStyle="primary">Create New</Button></h3>
                 <table className="table table-striped" style={{ marginTop: 20 }}>
                     <thead>
                         <tr>
@@ -103,17 +115,17 @@ class TableComponent extends Component {
                                         {alertObject.reqControlTime}
                                     </td>
                                     <td>
-                                        <button className="btn btn-primary" onClick={() => this.popupForm(alertObject.reqId)}>EDIT</button>
+                                        <Button btnStyle="primary" onClick={() => this.openEditTable(alertObject.reqId)}>Edit</Button>
                                     </td>
                                     <td>
-                                        <button
-                                            className="btn btn-danger"
-                                            onClick={() => this.submit(alertObject.reqId)}>Delete</button>
+                                        <Button
+                                            btnStyle="border"
+                                            onClick={() => this.openGraph(alertObject.reqId, alertObject.reqUrl, alertObject.reqType)}>Graph</Button>
                                     </td>
                                     <td>
-                                        <button
-                                            className="btn btn-danger"
-                                            onClick={() => this.graphPopUp(alertObject.reqId, alertObject.reqUrl, alertObject.reqType)}>Graph</button>
+                                        <Button
+                                            btnStyle="danger"
+                                            onClick={() => this.deleteConfirmScreen(alertObject.reqId)}>Delete</Button>
                                     </td>
                                 </tr>);
                         })}
@@ -123,7 +135,10 @@ class TableComponent extends Component {
 
                 <div>{
                     this.state.displayEditForm ? <EditTable
-                        objectIdFromTable={this.state.reqId}>
+                        objectIdFromTable={this.state.reqId}
+                        closeEditTable={this.closeEditTable}
+                        saveEditTable={this.getAlerts}
+                    >
                     </EditTable> : ''}
                 </div>
 
@@ -131,12 +146,17 @@ class TableComponent extends Component {
                     this.state.displayGraph ? <GraphicComponent
                         objectIdFromTable={this.state.reqId}
                         objectUrlFromTable={this.state.reqUrl}
-                        objectTypeFromTable={this.state.reqType}>
+                        objectTypeFromTable={this.state.reqType}
+                        closeGraph={this.closeGraph}>
+
                     </GraphicComponent> : ''}
                 </div>
 
                 <div>{
-                    this.state.displayCreateForm ? <FormComponent></FormComponent> : ''}
+                    this.state.displayCreateForm ? <FormComponent
+                        closeFormTable={this.popupAddFormClose}
+                        refreshTable={this.getAlerts}
+                    ></FormComponent> : ''}
                 </div>
             </div>
         );

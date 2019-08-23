@@ -10,7 +10,12 @@ class EditTable extends Component {
     constructor() {
         super();
         this.state = {
-            liste: {},
+            liste: {
+                reqName: "",
+                reqType: "",
+                reqUrl: "",
+                reqControlTime: ""
+            },
             showModal: null,
         }
         this.handleChange = this.handleChange.bind(this)
@@ -37,35 +42,34 @@ class EditTable extends Component {
         event.preventDefault();
         console.log("savelist:", this.state)
         axios.post('/api/alerts', this.state.liste)
-            .then(res => {
-                if (res.data === "basariyla eklendi!") {
-                    toast.success('Alert added!', {
-                        position: "top-right",
-                        autoClose: 2000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true
-                    });
-                } else {
-                    toast.danger('Failed!', {
-                        position: "top-right",
-                        autoClose: 2000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true
-                    });
-                }
-            })
+        .then(res => {
+            if (res.data === "basariyla eklendi!") {
+                toast.success('Alert added!', {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true
+                });
+            } else {
+                toast.danger('Failed!', {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true
+                });
+            }
+        })
+        this.props.saveEditTable();
     }
-
-
 
     render() {
         return (
-            <Modal>
-                <Modal.Header >
+            <Modal onClose={() => this.props.closeEditTable()}>
+                <Modal.Header>
                     <Modal.Title>
                         Request Edit
                 </Modal.Title>
@@ -99,11 +103,13 @@ class EditTable extends Component {
                         <Button
                             btnStyle="primary"
                             type="submit"
+                            
                         >
                             Save
                         </Button>
                         <Button
                             btnStyle="default"
+                            onClick={() => this.props.closeEditTable()}
                         >
                             Close
                         </Button>
