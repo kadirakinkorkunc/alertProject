@@ -30,8 +30,6 @@ class GraphicComponent extends Component {
         console.log("api verisi:", this.state.alertHistory);
       });
   }
-
-
   render() {
     return <div className="graphComp">
       <Nav >
@@ -39,12 +37,15 @@ class GraphicComponent extends Component {
           <button>Alert List</button>
         </LinkContainer>
       </Nav>
+      {console.log(this.state.alertHistory)}
+
+      
       <Chart
         width={'900px'}
         height={'600px'}
         chartType="LineChart"
         loader={<div>Loading Chart</div>}
-
+        
         data={this.state.alertHistory}
         options={{
           hAxis: {

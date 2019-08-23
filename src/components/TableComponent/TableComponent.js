@@ -1,35 +1,38 @@
 import React, { Component } from 'react';
 import './TableComponent.css';
 import axios from 'axios';
-import { LinkContainer } from 'react-router-bootstrap';
-import { Nav } from "react-bootstrap";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import EditTable from './EditTable.js';
 
 class TableComponent extends Component {
 
     state = {
         isLoading: true,
-        liste: []
+        liste: [],
+        displayEditForm: false,
+        displayGraph:false,
+        reqId: null
+        
     };
+
 
     submit = (id) => {
         confirmAlert({
-          title: 'Confirm to submit',
-          message: 'Are you sure to do this.',
-          buttons: [
-            {
-              label: 'Yes',
-              onClick: () => this.deleteItem(id)
-            },
-            {
-              label: 'No',
-              onClick: () => console.log("clicked no")
-            }
-          ]
+            title: 'Confirm to submit',
+            message: 'Are you sure to do this.',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => this.deleteItem(id)
+                },
+                {
+                    label: 'No',
+                    onClick: () => console.log("clicked no")
+                }
+            ]
         });
-      };
-
+    };
 
     componentDidMount = () => {
         return axios.get('/api/alerts')
@@ -44,13 +47,23 @@ class TableComponent extends Component {
     deleteItem = (id) => {
         axios.delete(`/api/alerts/${id}`)
             .then(res => {
-                console.log(res.data);
-                // this.setState({liste : res.data, isLoading:true})
             })
-        
+        this.setState({
+            liste: this.state.liste.filter(function (item) {
+                return item.reqId !== id
+            })
+        });
+        // databaseden silip, daha sonra stateden o itemi bulup siliyorum.
     }
 
-    // table post atınca bunun tekrar yenilenmesi lazım async belirtince olması gerekmiyor muydu?
+    popupForm = (id) => {
+        this.setState({ displayEditForm: !this.state.displayEditForm, reqId: id })
+    }
+
+    // graphPopUp = (id) => {
+    //     this.setState({ displayGraph: !this.state.displayGraph, reqId: id })
+    // }
+
     render() {
         return (
             <div>
@@ -82,54 +95,31 @@ class TableComponent extends Component {
                                         {alertObject.reqControlTime}
                                     </td>
                                     <td>
-                                        <LinkContainer to={"/edit" + alertObject.reqId}>
-                                            <button className="btn btn-primary">Edit</button>
-                                        </LinkContainer>
+                                        <button className="btn btn-primary" onClick={() => this.popupForm(alertObject.reqId)}>EDIT</button>
                                     </td>
                                     <td>
-                                        
-                                            <button
-                                                className="btn btn-danger"
-                                                onClick={() => this.submit(alertObject.reqId)}>Delete
-                                            </button>
+                                        <button
+                                            className="btn btn-danger"
+                                            onClick={() => this.submit(alertObject.reqId)}>Delete</button>
                                     </td>
+                                    {/* <td>
+                                        <button
+                                            className="btn btn-danger"
+                                            onClick={() => this.graph(alertObject.reqId)}>Graph</button>
+                                    </td> */}
                                 </tr>);
                         })}
+
                     </tbody>
                 </table>
+
+                <div>{
+                    this.state.displayEditForm ? <EditTable 
+                        objectIdFromTable={this.state.reqId}>
+                        </EditTable> : ''}
+                </div>
             </div>
         );
-        // return <Async promiseFn={this.getAlerts}>
-        //     {({ data, error, isLoading, reload }) => {
-        //         if (isLoading) {
-        //             return <div >Loading...</div>
-        //         }
-        //         if (error) {
-        //             return (
-        //                 <div >
-        //                     <p>{error.toString()}</p>
-        //                     <button onClick={reload}>try again</button>
-        //                 </div>
-        //             )
-        //         }
-        //         if (data) {
-        //             return <div className="tableDiv">
-        //                 <List component="nav" aria-label="main mailbox folders">
-        //                     {data.map((dataItem) =>
-        //                         <ListItem key={dataItem.reqId} onClick={this.showGraph}>
-        //                             <LinkContainer to={`/graph/${dataItem.reqId}`}>
-        //                                 <Nav.Link>{dataItem.reqName}-{dataItem.reqUrl}</Nav.Link>
-        //                             </LinkContainer>
-        //                         </ListItem>
-        //                     )}
-        //                 </List>
-
-        //             </div>
-        //         }
-        //         return null
-        //     }}
-
-        // </Async>
     }
 }
 export default TableComponent;
