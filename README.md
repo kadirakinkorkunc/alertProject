@@ -11,17 +11,17 @@ You will also see any lint errors in the console.
 
 ## Ekranlar ve Bileşenler:  
 ### •	Ana Giriş:
-        Yapılmak istenen işleme göre yönlendirme yapan ve listeleme yapan ekrandır(Görsel 1)  
+        Yapılmak istenen işleme göre yönlendirme yapan ve listeleme yapan ekrandır 
 ![alt text](https://github.com/kadirakinkorkunc/alertProject/blob/master/src/assets/Images/mainPage.png)
 --
 ### •	Oluşturma Ekranı:
-        Buton tepkisi olarak pop-up olarak çıkan form ekranına yönlendirir.(Görsel 2.1) 
-![alt text](https://github.com/kadirakinkorkunc/alertProject/blob/master/src/assets/Images/createNewPage.png))
+        Buton tepkisi olarak pop-up olarak çıkan form ekranına yönlendirir.
+![alt text](https://github.com/kadirakinkorkunc/alertProject/blob/master/src/assets/Images/createNewPage.png)
 --
 ### •	Grafik Ekranı:
-        Kullanıcı bu ekranda ilişkili kayıtın başarı durumunu ve cevap sürelerini görüntüler.(Görsel 2.2)  
-![alt text](https://github.com/kadirakinkorkunc/alertProject/blob/master/src/assets/Images/graphPage.png))
+        Kullanıcı bu ekranda ilişkili kayıtın başarı durumunu ve cevap sürelerini görüntüler.
+![alt text](https://github.com/kadirakinkorkunc/alertProject/blob/master/src/assets/Images/graphPage.png)
 
 ### •	Silme Ekranı:
         Kullanıcı ana ekranda silme butonuna tepki olarak bu ekranı görüntüler, cevaba göre işlem yapılır. 
-![alt text](https://github.com/kadirakinkorkunc/alertProject/blob/master/src/assets/Images/deletePage.png))
+![alt text](https://github.com/kadirakinkorkunc/alertProject/blob/master/src/assets/Images/deletePage.png)
