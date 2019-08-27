@@ -9,7 +9,6 @@ import GraphicComponent from '../GraphicComponent/GraphicComponent';
 import FormComponent from '../FormComponent/FormComponent';
 import { Button } from '../../assets/Buttons';
 import ReactPaginate from 'react-paginate';
-
 class TableComponent extends Component {
     constructor() {
         super();
@@ -23,21 +22,35 @@ class TableComponent extends Component {
             reqUrl: null,
             reqType: null,
             search: '',
-            offset : 0, // .sayfa ,, butona tıklanıldıgı değer offseti değişicek
+            offset: 0, // .sayfa ,, butona tıklanıldıgı değer offseti değişicek
             pageCount: 0,
             perPage: 5, // tane
         };
     }
+    componentDidMount = () => {
+        this.getAlerts();
+    }
+    getAlerts = () => {
+        axios.get('/api/alerts/size')
+            .then(res => {
+                console.log(res.data);
+                this.setState({ pageCount: Math.ceil(res.data / this.state.perPage) < 1 ? 1 : Math.ceil(res.data / this.state.perPage) })
+                console.log(this.state.pageCount);
+            })
+        axios.get(`/api/alerts?offset=${this.state.offset}&limit=${this.state.perPage}`)
+            .then(res => {
+                this.setState({ liste: res.data, isLoading: true })
+            });
+    }
     handlePageClick = data => {
-        console.log("data:",data);
-        let selected = data.selected + 1;
+        console.log("data:", data);
+        let selected = data.selected;
         let offset = selected;
-    
-        this.setState({ offset: offset }, () => {
-          this.getAlerts();
-        });
-      };
 
+        this.setState({ offset: offset }, () => {
+            this.getAlerts();
+        });
+    };
     deleteConfirmScreen = (id) => {
         confirmAlert({
             title: 'Confirm to submit',
@@ -54,7 +67,6 @@ class TableComponent extends Component {
             ]
         });
     };
-
     deleteItem = (id) => {
         axios.delete(`/api/alerts/${id}`)
             .then(res => {
@@ -64,30 +76,11 @@ class TableComponent extends Component {
                 return item.reqId !== id
             })
         });
-        // databaseden silip, daha sonra stateden o itemi bulup siliyorum.
-    }
 
-    componentDidMount = () => {
-        this.getAlerts();
     }
-
-    getAlerts = () => {
-        axios.get('/api/alerts/size')
-            .then(res => {
-                console.log(res.data);
-                this.setState({ pageCount: Math.ceil(res.data / this.state.perPage) < 1 ? 1 : Math.ceil(res.data / this.state.perPage) })
-                console.log(this.state.pageCount);
-            })
-        axios.get(`/api/alerts?offset=${this.state.offset}&limit=${this.state.perPage}`)
-            .then(res => {
-                this.setState({ liste: res.data, isLoading: true})
-            });
-    }
-
     openEditTable = (id) => {
         this.setState({ displayEditForm: true, reqId: id });
     }
-
     closeEditTable = () => {
         this.setState({ displayEditForm: false, reqId: null });
     }
@@ -106,9 +99,6 @@ class TableComponent extends Component {
     updateSearch(event) {
         this.setState({ search: event.target.value.substring(0, 20) });
     }
-
-
-
     render() {
         let filteredList = this.state.liste.filter(
             (listItem) => {
@@ -117,14 +107,31 @@ class TableComponent extends Component {
         );
 
         return (
-
             <div>
                 <h3 align="center"><Button onClick={() => this.popupAddFormOpen()} btnStyle="primary">Create New</Button></h3>
                 {/* SEARCH BAR */}
-                <input id='search-btn' type='checkbox' onClick={() => this.setState({ search: '' })} />
-                <label htmlFor='search-btn'>Show search bar</label>
-                <input id='search-bar' value={this.state.search} onChange={this.updateSearch.bind(this)} type='text' placeholder='search by url' />
+                <div>
+                    <input id='search-btn' type='checkbox' onClick={() => this.setState({ search: '' })} />
+                    <label htmlFor='search-btn'>Show search bar</label>
+                    <input id='search-bar' value={this.state.search} onChange={this.updateSearch.bind(this)} type='text' placeholder='search by url' />
+                </div>
                 {/* SEARCH BAR */}
+
+                {/* PAGINATION */}
+                <ReactPaginate
+                    previousLabel={'previous'}
+                    nextLabel={'next'}
+                    breakLabel={'...'}
+                    breakClassName={'break-me'}
+                    pageCount={this.state.pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={this.handlePageClick}
+                    containerClassName={'pagination'}
+                    subContainerClassName={'pages pagination'}
+                    activeClassName={'active'}
+                />
+                {/* PAGINATION */}
 
                 <table className="table table-striped" style={{ marginTop: 20 }}>
                     <thead>
@@ -170,21 +177,9 @@ class TableComponent extends Component {
                     </tbody>
                 </table>
 
-                {/* PAGINATION */}
-                <ReactPaginate
-                    previousLabel={'previous'}
-                    nextLabel={'next'}
-                    breakLabel={'...'}
-                    breakClassName={'break-me'}
-                    pageCount={this.state.pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={this.handlePageClick}
-                    containerClassName={'pagination'}
-                    subContainerClassName={'pages pagination'}
-                    activeClassName={'active'}
-                />
-                {/* PAGINATION */}
+
+                
+                {/* EDIT TABLE CONDITION */}
                 <div>{
                     this.state.displayEditForm ? <EditTable
                         objectIdFromTable={this.state.reqId}
@@ -193,7 +188,10 @@ class TableComponent extends Component {
                     >
                     </EditTable> : ''}
                 </div>
+                {/* EDIT TABLE CONDITION */}
 
+
+                {/* GRAPH CONDITION */}
                 <div>{
                     this.state.displayGraph ? <GraphicComponent
                         objectIdFromTable={this.state.reqId}
@@ -203,13 +201,17 @@ class TableComponent extends Component {
 
                     </GraphicComponent> : ''}
                 </div>
+                {/* GRAPH CONDITION */}
 
+
+                {/* NEW ALERT CONDITION */}
                 <div>{
                     this.state.displayCreateForm ? <FormComponent
                         closeFormTable={this.popupAddFormClose}
                         refreshTable={this.getAlerts}
                     ></FormComponent> : ''}
                 </div>
+                {/* NEW ALERT CONDITION */}
             </div>
         );
     }
