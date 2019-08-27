@@ -26,6 +26,7 @@ class TableComponent extends Component {
             pageCount: 0,
             perPage: 5, // tane
         };
+        this.handleChange = this.handleSelectPage.bind(this);
     }
     componentDidMount = () => {
         this.getAlerts();
@@ -51,6 +52,13 @@ class TableComponent extends Component {
             this.getAlerts();
         });
     };
+
+    handleSelectPage = (event) => {
+        this.setState({ perPage: event.target.value }, () => {
+            this.getAlerts();
+        })
+
+    }
     deleteConfirmScreen = (id) => {
         confirmAlert({
             title: 'Confirm to submit',
@@ -118,19 +126,33 @@ class TableComponent extends Component {
                 {/* SEARCH BAR */}
 
                 {/* PAGINATION */}
-                <ReactPaginate
-                    previousLabel={'previous'}
-                    nextLabel={'next'}
-                    breakLabel={'...'}
-                    breakClassName={'break-me'}
-                    pageCount={this.state.pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={this.handlePageClick}
-                    containerClassName={'pagination'}
-                    subContainerClassName={'pages pagination'}
-                    activeClassName={'active'}
-                />
+                <div className="reactPagination">
+                    <ReactPaginate
+                        previousLabel={'previous'}
+                        nextLabel={'next'}
+                        breakLabel={'...'}
+                        breakClassName={'break-me'}
+                        pageCount={this.state.pageCount}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={this.handlePageClick}
+                        containerClassName={'pagination'}
+                        subContainerClassName={'pages pagination'}
+                        activeClassName={'active'}
+                    />
+                </div>
+                {/* PAGE NUMBER */}
+                <div >
+                    <select value={this.state.perPage} onChange={this.handleSelectPage}>
+                        <option>5</option>
+                        <option>10</option>
+                        <option>20</option>
+                        <option>50</option>
+                        <option>100</option>
+                    </select>
+                </div>
+                {/* PAGE NUMBER */}
+
                 {/* PAGINATION */}
 
                 <table className="table table-striped" style={{ marginTop: 20 }}>
@@ -178,7 +200,7 @@ class TableComponent extends Component {
                 </table>
 
 
-                
+
                 {/* EDIT TABLE CONDITION */}
                 <div>{
                     this.state.displayEditForm ? <EditTable
