@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './TableComponent.css';
+import './TableComponent.scss';
 import axios from 'axios';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
@@ -7,21 +8,35 @@ import EditTable from './EditTable.js';
 import GraphicComponent from '../GraphicComponent/GraphicComponent';
 import FormComponent from '../FormComponent/FormComponent';
 import { Button } from '../../assets/Buttons';
+import ReactPaginate from 'react-paginate';
 
 class TableComponent extends Component {
-
-    state = {
-        isLoading: true,
-        liste: [],
-        displayEditForm: false,
-        displayGraph: false,
-        displayCreateForm: false,
-        reqId: null,
-        reqUrl: null,
-        reqType: null
-
-    };
-
+    constructor() {
+        super();
+        this.state = {
+            isLoading: true,
+            liste: [],
+            displayEditForm: false,
+            displayGraph: false,
+            displayCreateForm: false,
+            reqId: null,
+            reqUrl: null,
+            reqType: null,
+            search: '',
+            offset : 0, // .sayfa ,, butona tıklanıldıgı değer offseti değişicek
+            pageCount: 0,
+            perPage: 5, // tane
+        };
+    }
+    handlePageClick = data => {
+        console.log("data:",data);
+        let selected = data.selected + 1;
+        let offset = selected;
+    
+        this.setState({ offset: offset }, () => {
+          this.getAlerts();
+        });
+      };
 
     deleteConfirmScreen = (id) => {
         confirmAlert({
@@ -57,10 +72,15 @@ class TableComponent extends Component {
     }
 
     getAlerts = () => {
-        axios.get('/api/alerts')
+        axios.get('/api/alerts/size')
             .then(res => {
-                console.log("tableGet", res.data);
-                this.setState({ liste: res.data, isLoading: true })
+                console.log(res.data);
+                this.setState({ pageCount: Math.ceil(res.data / this.state.perPage) < 1 ? 1 : Math.ceil(res.data / this.state.perPage) })
+                console.log(this.state.pageCount);
+            })
+        axios.get(`/api/alerts?offset=${this.state.offset}&limit=${this.state.perPage}`)
+            .then(res => {
+                this.setState({ liste: res.data, isLoading: true})
             });
     }
 
@@ -83,11 +103,29 @@ class TableComponent extends Component {
     popupAddFormClose = () => {
         this.setState({ displayCreateForm: false })
     }
+    updateSearch(event) {
+        this.setState({ search: event.target.value.substring(0, 20) });
+    }
+
+
 
     render() {
+        let filteredList = this.state.liste.filter(
+            (listItem) => {
+                return listItem.reqUrl.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+            }
+        );
+
         return (
+
             <div>
                 <h3 align="center"><Button onClick={() => this.popupAddFormOpen()} btnStyle="primary">Create New</Button></h3>
+                {/* SEARCH BAR */}
+                <input id='search-btn' type='checkbox' onClick={() => this.setState({ search: '' })} />
+                <label htmlFor='search-btn'>Show search bar</label>
+                <input id='search-bar' value={this.state.search} onChange={this.updateSearch.bind(this)} type='text' placeholder='search by url' />
+                {/* SEARCH BAR */}
+
                 <table className="table table-striped" style={{ marginTop: 20 }}>
                     <thead>
                         <tr>
@@ -99,7 +137,7 @@ class TableComponent extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.liste.map((alertObject) => {
+                        {filteredList.map((alertObject) => {
                             return (
                                 <tr key={alertObject.reqId}>
                                     <td>
@@ -129,10 +167,24 @@ class TableComponent extends Component {
                                     </td>
                                 </tr>);
                         })}
-
                     </tbody>
                 </table>
 
+                {/* PAGINATION */}
+                <ReactPaginate
+                    previousLabel={'previous'}
+                    nextLabel={'next'}
+                    breakLabel={'...'}
+                    breakClassName={'break-me'}
+                    pageCount={this.state.pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={this.handlePageClick}
+                    containerClassName={'pagination'}
+                    subContainerClassName={'pages pagination'}
+                    activeClassName={'active'}
+                />
+                {/* PAGINATION */}
                 <div>{
                     this.state.displayEditForm ? <EditTable
                         objectIdFromTable={this.state.reqId}

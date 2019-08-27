@@ -24,10 +24,10 @@ class GraphicComponent extends Component {
     clearInterval(this.interval);
   }
 
-  getGraphs = () => {  
-    axios.get(`/api/alerts/${this.props.objectIdFromTable}/history`) 
+  getGraphs = () => {
+    axios.get(`/api/alerts/${this.props.objectIdFromTable}/history`)
       .then(res => {
-        this.setState({ alertHistory: [["freq", "Alert"]].concat(res.data.map((dataItem) => [dataItem.alertTime, dataItem.success])), isLoading: true })
+        this.setState({ alertHistory: [["time", "latency", "state"]].concat(res.data.map((dataItem) => [dataItem.alertTime, dataItem.alertLatency, dataItem.success])), isLoading: true })
         console.log("api verisi:", this.state.alertHistory);
       });
   }
@@ -44,6 +44,7 @@ class GraphicComponent extends Component {
         <Modal.Header>
           <Modal.Title>
             <strong>{this.props.objectUrlFromTable} </strong> -> {this.props.objectTypeFromTable}
+            <br></br>200=Succesfull,100=Failed
           </Modal.Title>
         </Modal.Header>
         <Modal.Body padding>
@@ -56,12 +57,17 @@ class GraphicComponent extends Component {
             data={this.state.alertHistory}
             options={{
               hAxis: {
-                title: 'hour:minute:second',
+                title: 'Request Time(hour:minute:second)',
               },
-              vAxis: { title: "State", ticks: [{ v: 0, f: "Fail" }, { v: 1, f: "Success" }] },
+              vAxis: { title: "Response Time(ms)" },
+              series: {
+                1: { curveType: 'function' },
+              },
             }}
             rootProps={{ 'data-test': '1' }}
           />
+
+
         </Modal.Body>
       </Modal>
     </div>
