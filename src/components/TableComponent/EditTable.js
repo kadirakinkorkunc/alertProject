@@ -44,6 +44,7 @@ class EditTable extends Component {
         axios.post('/api/alerts', this.state.liste)
         .then(res => {
             if (res.data === "basariyla eklendi!") {
+                this.props.saveEditTable();
                 toast.success('Alert added!', {
                     position: "top-right",
                     autoClose: 2000,
@@ -63,7 +64,6 @@ class EditTable extends Component {
                 });
             }
         })
-        this.props.saveEditTable();
     }
 
     render() {
